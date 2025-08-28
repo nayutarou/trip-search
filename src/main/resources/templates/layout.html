@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">>
+<!-- headタグを部品化 -->
+<head th:fragment="head(title, url)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" th:href="${url}">
+    <link rel="stylesheet" th:href="@{/css/font-style.css}">
+    <link rel="stylesheet" th:href="@{/css/footer-style.css}">
+     <meta name="_csrf" th:content="${_csrf.token}"/>
+     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="shortcut icon" th:href="@{img/favicon-trip.ico}" type="image/x-icon">
+    <title th:text="${title}">Title</title>
+</head>
+<body>
+
+</body>
+</html>

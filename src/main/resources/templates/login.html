@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{ layout :: head(ログイン, @{/css/auth/login.css})}">
+</head>
+<!--    <link rel="stylesheet" th:href="@{/css/auth/login.css}">-->
+<body>
+<div>
+    <div th:if="${param.logout}" class="success">
+        <p>ログアウトしました。</p>
+    </div>
+    <div th:if="${param.register}" class="success">
+        <p>登録に成功しました。</p>
+    </div>
+    <div class="content">
+        <h1>Let's Trip</h1>
+        <form th:action="@{/login}" method="post">
+            <div class="email">
+                <p>メールアドレス :</p>
+                <input type="email" name="email" placeholder="メールアドレスを入力してください">
+            </div>
+            <div class="password">
+                <p>パスワード :</p>
+                <input type="password" name="password" placeholder="パスワードを入力してください">
+            </div>
+            <p class="password-forget">
+                パスワードを忘れた方は<a href="">こちら</a>
+            </p>
+
+            <div th:if="${param.error}" class="error">
+                <p>ログインに失敗しました。</p>
+                <p>メールアドレスまたはパスワードを確認してください。</p>
+            </div>
+            <button type="submit" >ログイン</button>
+        </form>
+        <a class="regist" th:href="@{/register}">新規会員登録<img th:src="@{/img/regist-button.png}" alt="regist"></a>
+    </div>
+</div>
+</body>
+
+</html>

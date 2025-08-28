@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ layout :: head(観光地詳細, @{/css/spot/detail-style.css})}"></head>
+
+<body>
+<div class="header">
+    <a th:href="@{/spots}"><span>←</span> 検索ページへ</a>
+</div>
+
+<div class="hero">
+    <img th:src="${spot.photoUrl}" th:alt="${spot.name} + 'の写真'">
+    <div class="hero-title" th:text="${spot.name}">白神山地</div>
+    <div class="black-gradient"></div>
+</div>
+
+<main>
+    <div class="main">
+        <div class="container-1">
+            <div class="info">
+                <div class="evaluation">
+                    <h2>評価</h2>
+                    <div class="rate">
+                        <div>Google評価</div>
+                        <div class="rating-box" th:style="'--rating: ' + ${spot.rating} + ';'">★★★★★</div>
+                    </div>
+                    <div class="rate">
+                        <div>アプリ評価</div>
+                        <div class="app-rating-container">
+                            <!-- 口コミが1件以上ある場合 -->
+                            <th:block th:if="${spot.appRatingCount > 0}">
+                                <div class="rating-box" th:style="'--rating: ' + ${spot.appRating} + ';'">★★★★★</div>
+                                <span class="rating-text"
+                                      th:text="${#numbers.formatDecimal(spot.appRating, 1, 1)} + ' (' + ${spot.appRatingCount} + '件)'"></span>
+                            </th:block>
+                            <!-- 口コミがまだない場合 -->
+                            <div th:if="${spot.appRatingCount == 0}" class="no-rating">
+                                ☆☆☆☆☆ <br><span> (評価なし)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="access-info">
+                        <h2>
+                            アクセス時間
+                        </h2>
+                        <div th:if="${spot.accessInfo != 'アクセス情報なし'}">
+                            <p class="ml-10" th:text="${spot.accessInfo}">---</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="basic-info">
+                    <h2>営業時間</h2>
+                    <div th:if="${spot.openingHoursText != '営業時間情報なし'}">
+                        <div class="ml-10" th:utext="${spot.openingHoursText}">10:00〜20:00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="access">
+                <div class="description" th:if="${spot.description != null}">
+                    <strong>概要</strong>
+                    <div></div>
+                </div>
+                <p th:text="${spot.description}">
+                    自然遺産に登録された山地で、ブナの原生林、滝、ハイキングコースがある。
+                </p>
+            </div>
+        </div>
+        <div class="container-2">
+            <div class="address">
+                <h2>連絡先</h2>
+                <div>
+                    <strong class="font-20">住所</strong>
+                    <p th:text="${spot.address}">〒000-0020 <br> 青森県八戸市岬台1-2-4-5-1</p>
+                </div>
+                <div style="margin-top: 1em;" th:if="${spot.phoneNumber != null}">
+                    <strong class="font-20">電話番号</strong>
+                    <p th:text="${spot.phoneNumber}">0102-040-424</p>
+                </div>
+                <div style="margin-top: 1em;" th:if="${spot.websiteUri != null}">
+                    <strong class="font-20">ウェブサイト</strong>
+                    <a th:href="${spot.websiteUri}" target="_blank">公式サイトへ</a>
+                </div>
+            </div>
+
+            <div class="favorite">
+                <!-- ★★★ ここがポイント(1): JavaScriptで制御するボタン ★★★ -->
+                <!-- isFavoriteの状態に応じて、見た目とデータ属性を動的に変更します -->
+                <button id="favoriteBtn"
+                        class="font-18"
+                        th:classappend="${isFavorite} ? 'favorite-btn-active' : 'favorite-btn'"
+                        th:text="${isFavorite} ? 'お気に入り済み' : 'お気に入りに追加'"
+                        th:attr="data-place-id=${spot.placeId}, data-is-favorite=${isFavorite}">
+                    お気に入りに追加
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container2">
+        <h2>この場所の口コミ</h2>
+        <!-- 口コミが1件もない場合の表示 -->
+        <div th:if="${#lists.isEmpty(spot.reviews)}" class="no-reviews-message">
+            <p>この場所にはまだ口コミがありません。</p>
+            <a th:href="@{/reviews/new(placeId=${spot.placeId})}" class="add-review-link">最初の口コミを投稿する</a>
+        </div>
+
+        <!-- 口コミがある場合の表示 -->
+        <div class="review-grid" th:unless="${#lists.isEmpty(spot.reviews)}">
+            <!-- ★★★ 修正点: ループ変数を reviewDto に変更 ★★★ -->
+            <div class="review-item" th:each="reviewDto : ${spot.reviews}">
+                <div class="review-item-header">
+                    <!-- ★★★ 修正点: reviewDto.userEmail を表示 ★★★ -->
+                    <span class="review-user" th:text="${reviewDto.getEmail()}">ユーザーのメールアドレス</span>
+                    <!-- ★★★ 修正点: reviewDto.review.rating を使用 ★★★ -->
+                    <div class="rating-box-small" th:style="'--rating: ' + ${reviewDto.review.rating} + ';'"></div>
+                </div>
+                <!-- ★★★ 修正点: reviewDto.review.imagePath を使用 ★★★ -->
+                <img th:if="${reviewDto.review.imagePath != null}" th:src="@{/images/reviews/{imageName}(imageName=${reviewDto.review.imagePath})}" alt="口コミ写真" class="review-item-image">
+                <!-- ★★★ 修正点: reviewDto.review.comment を使用 ★★★ -->
+                <p class="review-item-comment" th:text="${reviewDto.review.comment}"></p>
+                <div class="review-item-footer">
+                    <!-- ★★★ 修正点: reviewDto.review.visitedAt を使用 ★★★ -->
+                    <span th:if="${reviewDto.review.visitedAt != null}" th:text="${#temporals.format(reviewDto.review.visitedAt, 'yyyy/MM/dd')} + ' 訪問'"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!-- ★★★ ここがポイント(2): 修正済みのJavaScript ★★★ -->
+<script>
+    // HTMLの読み込みが完了してからスクリプトを実行することで、
+    // 'favoriteBtn'が見つからないエラーを防ぎます。
+    document.addEventListener('DOMContentLoaded', () => {
+        const favoriteBtn = document.getElementById('favoriteBtn');
+
+        if (favoriteBtn) {
+            favoriteBtn.addEventListener('click', async () => {
+                if (favoriteBtn.disabled) return; // 連打防止
+
+                const placeId = favoriteBtn.dataset.placeId;
+                const isCurrentlyFavorite = favoriteBtn.dataset.isFavorite === 'true';
+                const method = isCurrentlyFavorite ? 'DELETE' : 'POST';
+                const url = `/api/favorites/${placeId}`;
+
+                // layout.htmlに埋め込んだmetaタグからCSRFトークンを取得
+                const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+                try {
+                    favoriteBtn.disabled = true; // 連打防止
+
+                    // 非同期でAPIを呼び出す
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            [header]: token // ヘッダーにCSRFトークンを設定
+                        }
+                    });
+
+                    // 成功したらボタンの見た目を更新
+                    if (response.ok) {
+                        const isNowFavorite = !isCurrentlyFavorite;
+                        favoriteBtn.dataset.isFavorite = isNowFavorite;
+                        favoriteBtn.textContent = isNowFavorite ? 'お気に入り済み' : 'お気に入りに追加';
+                        favoriteBtn.classList.toggle('favorite-btn');
+                        favoriteBtn.classList.toggle('favorite-btn-active');
+                    } else {
+                        alert('操作に失敗しました。');
+                    }
+                } catch (error) {
+                    console.error('お気に入り操作中にエラーが発生しました:', error);
+                    alert('エラーが発生しました。');
+                } finally {
+                    favoriteBtn.disabled = false; // ボタンを再度有効化
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

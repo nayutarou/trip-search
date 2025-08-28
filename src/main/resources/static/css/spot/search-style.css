@@ -1,0 +1,311 @@
+@charset "utf-8";
+
+/* scroll */
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ffa63f;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image:
+            linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("../../img/background.jpg");
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+img:hover{
+    cursor: auto;
+}
+
+.blue-gradient {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30vh;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.2), #3D7DF5);
+}
+
+/* ハンバーガーボタン */
+
+.hamburger {
+    z-index: 100;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: auto;
+    /* margin: 10px 70px auto auto;     */
+    /* background-color: rgb(255, 255, 255); */
+    top: 0;
+    right: 0;
+    width: clamp(60px, 5.208335vw, 100px);
+    height: clamp(20px, 5.208335vw, 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 10px;
+    /* border: 2px solid #4CAF50; */
+}
+
+.line {
+    position: relative;
+    width: 40%;
+    height: clamp(2px, 0.208335vw, 4px);
+    /* 線の太さ */
+    background-color: #fff;
+    /* 線の色 (画像に近い緑色) */
+    border-radius: 2px;
+    /* 線の角を丸める */
+}
+
+.hamburger.active .line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+    /* 例: 1本目を斜めに回転 */
+}
+
+.hamburger.active .line:nth-child(2) {
+    opacity: 0;
+    /* 例: 2本目を非表示 */
+}
+
+.hamburger.active .line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+    /* 例: 3本目を斜めに回転 */
+}
+
+.hamburger.active {
+    border: none;
+}
+
+.hamburger.active .line {
+    background-color: #4CAF50;
+}
+
+.hamburger-menu {
+    display: none;
+    /* Keep it hidden by default */
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0 0 0 auto;
+    width: 20%;
+    min-width: 200px;
+    height: 100vh;
+    background-color: rgb(255, 255, 255, 0.9);
+    border-left: 2px solid #4CAF50;
+}
+
+/* This rule shows the menu when it has the 'active' class */
+.hamburger-menu.active {
+    display: block;
+}
+
+.hamburger-menu ul {
+    text-align: center;
+    margin-top: 15vh;
+}
+
+.hamburger-menu li {
+    margin: 7vh auto;
+}
+
+.hamburger-menu li:nth-child(6) {
+    margin-top: 30vh;
+}
+
+.hamburger-menu a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.hamburger-menu a:visited {
+    color: #4CAF50;
+}
+
+.hamburger-menu button{
+    border: none;
+}
+
+.hamburger-menu button:hover{
+    cursor: pointer;
+}
+
+/* ハンバーガーボタン終了 */
+
+.search {
+    margin: 50px auto 20px;
+    width: clamp(300px, 37.08335vw, 712px);
+    height: clamp(20px, 2.083335vw, 40px);
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 2px solid #52C561;
+    padding-left: 20px;
+    font-size: small;
+    min-height: clamp(20px, 2.083335vw, 40px);
+}
+
+.result {
+    display: block;
+    width: fit-content;
+    color: #fff;
+    margin: 0 auto 0 26%;
+    padding: 0 1px 2px;
+    border-bottom: 2px solid #000;;
+    font-size: medium;
+    font-weight: 400;
+}
+
+.text-black {
+    color: black;
+    text-decoration: none;
+}
+
+.text-black:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50.1%;
+    height: 25vh;
+    padding: 20px 0;
+    margin: 25px auto 0;
+    background-color: #fff;
+    border-top: 1px solid #094;
+    border-left: 1px solid #094;
+    border-top-left-radius: 20px;
+    box-shadow: 2px 4px 3px rgb(0, 0, 0, 0.85);
+}
+
+.container:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+    opacity: 0.98;
+}
+
+.content {
+    width: 49%;
+}
+
+.img-container {
+    width: 37.4%;
+    height: 95%;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+
+h2 {
+    font-size: 20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+}
+
+
+.rate {
+    display: flex;
+    margin-top: 6px;
+}
+
+.rate p {
+    width: 40%;
+}
+
+/* ☆ */
+.rating-box {
+    margin: auto 0;
+    --star-size: 0.95vw;
+    --star-color: #ccc;
+    --star-fill: gold;
+    --percent: calc(var(--rating) / 5 * 100%);
+    font-size: var(--star-size);
+    background: linear-gradient(90deg,
+    var(--star-fill) var(--percent),
+    var(--star-color) var(--percent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+.address-content {
+    display: flex;
+}
+
+.address-content div {
+    width: clamp(8px, 0.729165vw, 14px);
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: auto;
+}
+
+.address-content div img {
+    width: 100%;
+    height: auto;
+}
+
+.mt-20 {
+    margin-top: clamp(10px, 1.041665vw, 20px);
+}
+
+.time div,
+.address-content {
+    margin-left: 20px;
+    margin-top: 6px;
+}
+
+
+.address-content a {
+    color: blue;
+    margin: auto 0;
+}
+
+.address-content a:visited {
+    color: blue;
+}
+
+/* footer */
+
+/* footer */
+footer {
+    background-color: black;
+    margin-top: 100px;
+    padding: 15px 0;
+    color: white;
+    text-align: center;
+}
+
+small {
+    display: block;
+}

@@ -1,0 +1,220 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+.header {
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: medium;
+    text-decoration: none;
+    color: #000;
+}
+
+.header a:visited {
+    color: #000;
+}
+
+.header a span {
+    color: #0004FF;
+    margin-right: 5px;
+}
+
+.header a span:visited {
+    color: #0004FF;
+}
+
+.container {
+    max-width: 1200px; /* ★★★ 横幅を広げてグリッド表示に対応 ★★★ */
+    margin: 0 auto;
+    padding: 30px;
+}
+
+h1 {
+    /* margin-top: 20px; */
+    font-size: clamp(20px, 1.25vw, 24px);
+    text-align: center;
+    width: 200px;
+    margin: auto auto auto 30vw;
+    background-color: #fff;
+}
+
+h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.add-review-link {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 30px auto;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.add-review-link:hover {
+    background-color: #2980b9;
+}
+
+.no-reviews {
+    text-align: center;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.review-list {
+    display: grid;
+    /* ★★★ 修正点: グリッドレイアウトの設定 ★★★ */
+    /* 画面幅に応じて、300px以上のカードを可能な限り横に並べます */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.review-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* ★★★ 修正点: カード内の高さを揃えるための設定 ★★★ */
+    display: flex;
+    flex-direction: column;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.review-card-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.place-name {
+    font-size: 1.2rem; /* 少し小さくしてカードに収まりやすく */
+    font-weight: 600;
+    margin: 0;
+}
+
+.rating-display {
+    --percent: calc(var(--rating) / 5 * 100%);
+    display: inline-block;
+    font-size: 1rem; /* 少し小さく */
+    font-family: Times;
+    line-height: 1;
+    flex-shrink: 0; /* 星が縮まないように */
+}
+.rating-display::before {
+    content: '★★★★★';
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #f39c12 var(--percent), #ddd var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.review-card-body {
+    padding: 20px;
+    /* ★★★ 修正点: このエリアが伸びて高さを調整する ★★★ */
+    flex-grow: 1;
+}
+
+.review-image {
+    width: 100%;
+    /* ★★★ 修正点: 高さを固定してレイアウトを揃える ★★★ */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.review-comment {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.review-card-footer {
+    background-color: #fafafa;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    color: #777;
+    text-align: right;
+    border-top: 1px solid #f0f0f0;
+}
+
+.review-card-footer {
+    background-color: #fafafa;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    color: #777;
+    border-top: 1px solid #f0f0f0;
+    /* ★★★ 修正: ボタンと日付を両端に配置 ★★★ */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* ★★★ 追加: ボタン用のスタイル ★★★ */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.edit-btn {
+    background-color: #2980b9;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    font-family: inherit; /* buttonのフォントを他と合わせる */
+    padding-bottom: 7px;
+}

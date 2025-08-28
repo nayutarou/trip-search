@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+body {
+    background-color: #f4f7f6;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    /* ★★★ 修正点: bodyのデフォルトマージンをなくす ★★★ */
+    margin: 0;
+}
+
+/* ★★★ ヘッダー用のスタイルを追加 ★★★ */
+.header {
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.header a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: medium;
+    text-decoration: none;
+    color: #000;
+}
+
+.header a:visited {
+    color: #000;
+}
+
+.header a span {
+    color: #0004FF;
+    margin-right: 5px;
+}
+
+.header a span:visited {
+    color: #0004FF;
+}
+
+
+.form-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    /* ★★★ 修正点: ヘッダーの下に配置されるようにマージンを調整 ★★★ */
+    margin: 30px auto;
+}
+
+.error-message {
+    color: #e74c3c; /* エラー用の赤色 */
+    font-size: 0.9em;
+    margin-top: 5px;
+    min-height: 1.2em; /* メッセージがなくても高さを確保 */
+}
+
+h1 {
+    /* margin-top: 20px; */
+    font-size: clamp(20px, 1.25vw, 24px);
+    text-align: center;
+    width: 200px;
+    margin: auto auto auto 30vw;
+    background-color: #fff;
+}
+
+img{
+    width: 100%;
+    height: auto;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+/* 以下、他のスタイルは変更なし */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-group input[type="file"] {
+    font-size: 14px;
+}
+
+.autocomplete-container {
+    position: relative;
+}
+
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.autocomplete-item:hover {
+    background-color: #f2f2f2;
+}
+
+.rating-stars {
+    display: inline-block;
+    direction: rtl;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin: 0;
+    display: inline-block;
+}
+
+.rating-stars input[type="radio"]:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+    color: #f39c12;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
