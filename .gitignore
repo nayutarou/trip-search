@@ -1,0 +1,43 @@
+### ビルド関連のディレクトリとファイル ###
+# Mavenが生成するビルドディレクトリ
+/target/
+
+# Maven Wrapperの一時ファイル（WindowsとLinux）
+/mvnw
+/mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+### IDEごとの設定ファイル ###
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse (STS)
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+# VS Code
+.vscode/
+
+### 環境設定ファイル ###
+# 機密情報を含む可能性のあるプロパティファイル
+application.properties
+
+### その他のファイル ###
+# 自動生成されるヘルプファイル
+HELP.md
