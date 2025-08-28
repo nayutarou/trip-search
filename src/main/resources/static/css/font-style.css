@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+* {
+    font-size: 16px;
+}
+
+.font-40 {
+    font-size: clamp(24px, 2.083335vw, 40px);
+}
+
+.font-24 {
+    font-size: clamp(20px, 1.25vw, 24px);
+}
+
+.font-20 {
+    font-size: clamp(18px, 1.041665vw, 20px);
+}
+
+.font-18 {
+    font-size: clamp(12px, 0.9375vw, 18px);
+}
+
+.font-16 {
+    font-size: clamp(10px, 0.833335vw, 16px);
+}
+
+.font-14 {
+    font-size: clamp(8px, 0.729165vw, 14px);
+}

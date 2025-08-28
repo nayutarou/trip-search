@@ -1,0 +1,379 @@
+@charset "utf-8";
+
+.header {
+    height: 50px;
+    background-color: #fff;
+}
+
+.header a {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    font-size: medium;
+    text-decoration: none;
+    margin-left: 20px;
+    color: #000;
+}
+
+.header a :visited {
+    color: #000;
+}
+
+.header a span {
+    color: #0004FF;
+    margin-right: 5px;
+}
+
+.header a span:visited {
+    color: #0004FF;
+}
+
+/* 画像表示 */
+.hero {
+    width: 100%;
+    height: 93vh;
+    position: relative;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-title {
+    position: absolute;
+    color: #fff;
+    bottom: 10%;
+    left: 40px;
+    font-size: 25px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.black-gradient {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+}
+
+/* main components */
+
+body {
+    background-color: #E6E6E6;
+}
+
+.main {
+    display: flex;
+    margin: 40px 7% 50px;
+}
+
+.container-1 {
+    width: 55%;
+    font-size: clamp(14px, 0.9375vw, 18px);
+}
+
+h2 {
+    font-size: clamp(20px, 1.25vw, 28px);
+    margin-bottom: 10px;
+}
+
+.info {
+    background-color: #fff;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.basic-info, .evaluation {
+    min-height: 180px;
+}
+
+.basic-info div {
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.access-info {
+    margin-top: 20px;
+}
+
+.evaluation {
+    margin-right: 20px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.rate {
+    display: flex;
+    color: #000;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+/* ☆ */
+.rating-box {
+    margin: auto 0 auto 10px;
+    --star-size: 1.3vw;
+    --star-color: #ccc;
+    --star-fill: gold;
+    --percent: calc(var(--rating) / 5 * 100%);
+    font-size: var(--star-size);
+    background: linear-gradient(90deg,
+    var(--star-fill) var(--percent),
+    var(--star-color) var(--percent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.access {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    min-height: 30vh;
+    border-radius: 20px;
+}
+
+.container-2 {
+    margin-left: auto;
+    width: 35%;
+    font-size: clamp(14px, 0.9375vw, 18px);
+}
+
+.card {
+    background-color: #fff;
+}
+
+.favorite {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.favorite-btn {
+    border: none;
+    border-radius: 10px;
+    margin: auto;
+    padding: 1vw 6vw;
+    background-color: #3D7DF5;
+    color: #fff;
+}
+
+.favorite-btn-active {
+    border: none;
+    border-radius: 10px;
+    margin: auto;
+    padding: 1vw 6vw;
+    background-color: #ffdb22;
+    color: #fff;
+}
+
+.favorite button:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.description {
+    width: 100%;
+}
+
+.description strong {
+    padding: 5px 10px 2px 10px;
+    color: #0004FF;
+    border-bottom: 1.5px solid #0004FF;
+}
+
+.description div {
+    margin-top: 5px;
+    border: 1px solid #d9d9d9;
+}
+
+.access p {
+    margin: 10px;
+}
+
+.address {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.address h2 {
+    margin-bottom: 20px;
+}
+
+.address div {
+    margin-left: 10px;
+}
+
+.address p {
+    margin-top: 10px;
+    margin-left: 10px;
+    line-height: 1.5;
+}
+
+.address a {
+    display: block;
+    margin: 10px 0 0 10px;
+    color: #0004FF;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.address strong {
+    font-size: clamp(14px, 0.9375vw, 18px);
+}
+
+.font-20 {
+    font-size: clamp(18px, 1.041665vw, 20px);
+}
+
+.font-18 {
+    font-size: clamp(12px, 0.9375vw, 18px);
+}
+
+.font-16 {
+    font-size: clamp(10px, 0.833335vw, 16px);
+}
+
+.font-14 {
+    font-size: clamp(8px, 0.729165vw, 14px);
+}
+
+/* ★★★ 追加: アプリ内評価表示用のスタイル ★★★ */
+.app-rating-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 星とテキストの間の隙間 */
+}
+
+.rating-text {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.no-rating {
+    font-size: 1.2em;
+    color: #888;
+}
+
+.no-rating span {
+    font-size: 0.9rem;
+}
+
+/* ★★★ 追加: 口コミ表示セクション用のスタイル ★★★ */
+.main-container2 {
+    margin: 40px 7% 50px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.main-container2 h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2c3e50;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+}
+
+.no-reviews-message {
+    text-align: center;
+    width: 100%;
+}
+
+.add-review-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.add-review-link:hover {
+    background-color: #2980b9;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+.review-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fdfdfd;
+}
+
+.review-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-user {
+    font-weight: bold;
+}
+
+.rating-box-small {
+    --percent: calc(var(--rating) / 5 * 100%);
+    display: inline-block;
+    font-size: 1rem;
+    font-family: Times;
+    line-height: 1;
+}
+.rating-box-small::before {
+    content: '★★★★★';
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #f39c12 var(--percent), #ddd var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.review-item-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.review-item-comment {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+}
+
+.review-item-footer {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #888;
+}

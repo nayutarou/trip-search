@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ layout :: head('お気に入り一覧', @{/css/error/error-style.css})}"></head>
+<body>
+<div class="error-container">
+  <div class="error-code" th:text="${statusCode}">500</div>
+  <h1 th:text="${pageTitle}">サーバーエラー</h1>
+  <p th:text="${errorMessage}">予期せぬエラーが発生しました。</p>
+  <a th:href="@{/spots}" class="home-link">ホームに戻る</a>
+</div>
+</body>
+</html>

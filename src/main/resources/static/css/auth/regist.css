@@ -1,0 +1,127 @@
+@charset "utf-8";
+
+* {
+    font-size: 16px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image:
+            linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../../img/auth.jpg");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    margin: auto;
+    width: 35vw;
+    background-color: white;
+    padding: 10vh 0 5vh 0;
+}
+
+h1 {
+    font-size: clamp(16px, 2.083335vw, 40px);
+    color: #52C561;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    /* padding-top: 10vh; */
+}
+
+form {
+    width: 80%;
+    margin: 8vh auto 4vh auto;
+}
+
+.password,
+.email,
+.confirm {
+    text-align: left;
+    font-size: clamp(12px, 0.9375vw, 18px);
+    margin-top: 2vh;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.password p,.email p,.confirm p {
+    margin-bottom: 3px;
+}
+
+input {
+    width: 100%;
+    border: 1px solid black;
+    height: 2.5rem;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+input::placeholder {
+    font-size: clamp(12px, 0.9375vw, 18px);
+}
+
+.password-forget {
+    font-size: clamp(8px, 0.729165vw, 14px);
+    margin-top: 1vh;
+    color: #F74646;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: clamp(20px, 2.708335vw, 52px);
+    background-color: #52C561;
+    border: 1px solid #52C561;
+    color: white;
+    font-size: clamp(16px, 1.25vw, 24px);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    margin-top: 4vh;
+    cursor: pointer;
+}
+
+img {
+    width: clamp(8px, 0.729165vw, 14px);
+    height: auto;
+    margin: auto 2px auto auto;
+    vertical-align: middle;
+}
+
+.error {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #FFF5F5;
+    border: 1px solid #F74646;
+    border-left: 10px solid #F74646;
+    box-sizing: border-box;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.error p {
+    font-size: clamp(8px, 0.729165vw, 14px);
+    color: #F74646;
+    text-align: left;
+    margin: 10px 0 10px 10px;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    font-size: clamp(10px, 0.833335vw, 16px);
+    color: #000000;
+    text-decoration: none;
+}
+
+.login a {
+    color: #0055FF;
+}
+
+.login a:visited {
+    color: #0055FF;
+}

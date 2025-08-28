@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ layout :: head('お気に入り一覧', @{/css/favorite/favorite-style.css})}"></head>
+
+<body>
+
+<a href="#top" id="backToTop">↑ 上に戻る</a>
+
+<div class="header">
+    <a th:href="@{/spots}"><span>←</span> 検索ページへ</a>
+    <h1>お気に入り一覧ページ</h1>
+</div>
+
+<!-- ★============ お気に入りが1件もない場合に表示 ============★ -->
+<div th:if="${#lists.isEmpty(favoriteSpots)}" class="no-favorites">
+    <p>まだお気に入り登録された場所はありません。</p>
+</div>
+
+<main>
+
+    <!-- ★============ お気に入りリストを繰り返し表示 ============★ -->
+    <div class="container" th:each="fav : ${favoriteSpots}" th:if="${not #lists.isEmpty(favoriteSpots)}">
+        <div class="content">
+            <div class="img-container">
+                <img th:src="${fav.spot.photoUrl}" th:alt="${fav.spot.name}">
+            </div>
+            <div class="item">
+                <h2 th:text="${fav.spot.name}">白神山地</h2>
+                <!-- 解除ボタンのフォーム -->
+                <form th:action="@{/spots/{id}/unfavorite(id=${fav.spot.placeId})}" method="post">
+                    <button type="submit">解除</button>
+                </form>
+            </div>
+            <div class="rate">
+                <div class="rating-box" th:style="'--rating: ' + ${fav.spot.rating} + ';'">★★★★★</div>
+            </div>
+            <!-- ★★★ Thymeleafの機能を使って、このページだけで郵便番号を非表示にする ★★★ -->
+            <div class="address" th:text="${#strings.startsWith(fav.spot.address, '〒') ? #strings.substringAfter(fav.spot.address, ' ') : fav.spot.address}">
+                青森県中津軽郡西目屋村川原平
+            </div>
+            <div class="item">
+                <!-- #temporals.formatで日付の書式を整える -->
+                <div th:text="${#temporals.format(fav.createdAt, 'yyyy年MM月dd日')} + 'に追加'">2024年11月12日に追加</div>
+                <a th:href="@{/spots/{id}(id=${fav.spot.placeId})}">詳細を見る <br>→</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // スムーズスクロールを有効化
+    document.querySelector('#backToTop').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+</body>
+</html>

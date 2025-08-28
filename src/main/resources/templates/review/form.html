@@ -1,0 +1,271 @@
+<!-- templates/review/form.html -->
+
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ layout :: head('口コミ投稿', @{/css/review/form-style.css})}"></head>
+<body>
+<div class="header">
+    <a th:if="${isEditMode}" th:href="@{/reviews/my-list}"><span>←</span> 口コミ一覧へ</a>
+    <a th:unless="${isEditMode}" th:href="@{/spots}"><span>←</span> 検索ページへ</a>
+</div>
+
+<div class="form-container">
+    <h2 th:text="${isEditMode} ? '口コミを編集する' : '口コミを投稿する'">口コミを投稿する</h2>
+
+    <!-- =================================================================== -->
+    <!-- ★★★ 編集用のフォーム ★★★ -->
+    <!-- =================================================================== -->
+    <form th:if="${isEditMode}" id="reviewFormEdit" th:action="@{/reviews/update}" th:object="${reviewForm}" method="post" enctype="multipart/form-data">
+        <!-- CSRFトークンとID -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" th:field="*{reviewId}" />
+        <input type="hidden" th:field="*{placeId}" />
+
+        <!-- 場所 (編集時は表示のみ) -->
+        <div class="form-group">
+            <label>場所</label>
+            <p class="place-name-display" th:text="${placeName}"></p>
+        </div>
+
+        <!-- 評価エリア (星) -->
+        <div class="form-group">
+            <label>評価</label>
+            <div class="rating-stars">
+                <input type="radio" id="star5_edit" name="rating" th:field="*{rating}" value="5.0"/><label for="star5_edit">★</label>
+                <input type="radio" id="star4_edit" name="rating" th:field="*{rating}" value="4.0"/><label for="star4_edit">★</label>
+                <input type="radio" id="star3_edit" name="rating" th:field="*{rating}" value="3.0"/><label for="star3_edit">★</label>
+                <input type="radio" id="star2_edit" name="rating" th:field="*{rating}" value="2.0"/><label for="star2_edit">★</label>
+                <input type="radio" id="star1_edit" name="rating" th:field="*{rating}" value="1.0"/><label for="star1_edit">★</label>
+            </div>
+            <div id="ratingErrorEdit" class="error-message"></div>
+        </div>
+
+        <!-- 訪問日エリア -->
+        <div class="form-group">
+            <label for="visitedAtEdit">訪問日</label>
+            <input type="date" id="visitedAtEdit" th:field="*{visitedAt}" min="1980-01-01"/>
+            <div id="visitedAtErrorEdit" class="error-message"></div>
+        </div>
+
+        <!-- コメントエリア -->
+        <div class="form-group">
+            <label for="commentEdit">コメント</label>
+            <textarea id="commentEdit" th:field="*{comment}" rows="6" placeholder="場所の感想やおすすめポイントを自由にお書きください"></textarea>
+            <div id="commentErrorEdit" class="error-message"></div>
+        </div>
+
+        <!-- 画像アップロードエリア -->
+        <div class="form-group">
+            <label for="imageFileEdit">画像</label>
+            <div th:if="*{existingImagePath != null}" class="existing-image-container">
+                <p>現在の画像:</p>
+                <img th:src="@{/images/reviews/{imageName}(imageName=*{existingImagePath})}" alt="既存の画像" class="existing-image-preview"/>
+            </div>
+            <p class="image-note">新しい画像をアップロードすると、既存の画像は上書きされます。</p>
+            <input type="file" id="imageFileEdit" th:field="*{imageFile}" accept="image/*"/>
+            <img id="imagePreviewEdit" src="#" alt="新しい画像のプレビュー" class="image-preview"/>
+        </div>
+
+        <button type="submit" class="submit-btn">更新する</button>
+    </form>
+
+    <!-- =================================================================== -->
+    <!-- ★★★ 新規登録用のフォーム ★★★ -->
+    <!-- =================================================================== -->
+    <form th:unless="${isEditMode}" id="reviewFormNew" th:action="@{/reviews}" th:object="${reviewForm}" method="post" enctype="multipart/form-data">
+        <!-- CSRFトークンとID -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" th:field="*{placeId}" id="placeIdInput"/>
+
+        <!-- 場所 (新規登録時は検索) -->
+        <div class="form-group autocomplete-container">
+            <label for="placeSearchInput">場所を検索</label>
+            <input type="text" id="placeSearchInput" placeholder="例: 東京タワー" autocomplete="off"/>
+            <div id="searchResults" class="autocomplete-results"></div>
+            <div id="placeError" class="error-message"></div>
+        </div>
+
+        <!-- 評価エリア (星) -->
+        <div class="form-group">
+            <label>評価</label>
+            <div class="rating-stars">
+                <input type="radio" id="star5_new" name="rating" th:field="*{rating}" value="5.0"/><label for="star5_new">★</label>
+                <input type="radio" id="star4_new" name="rating" th:field="*{rating}" value="4.0"/><label for="star4_new">★</label>
+                <input type="radio" id="star3_new" name="rating" th:field="*{rating}" value="3.0"/><label for="star3_new">★</label>
+                <input type="radio" id="star2_new" name="rating" th:field="*{rating}" value="2.0"/><label for="star2_new">★</label>
+                <input type="radio" id="star1_new" name="rating" th:field="*{rating}" value="1.0"/><label for="star1_new">★</label>
+            </div>
+            <div id="ratingError" class="error-message"></div>
+        </div>
+
+        <!-- 訪問日エリア -->
+        <div class="form-group">
+            <label for="visitedAt">訪問日</label>
+            <input type="date" id="visitedAt" th:field="*{visitedAt}" min="1980-01-01"/>
+            <div id="visitedAtError" class="error-message"></div>
+        </div>
+
+        <!-- コメントエリア -->
+        <div class="form-group">
+            <label for="comment">コメント</label>
+            <textarea id="comment" th:field="*{comment}" rows="6" placeholder="場所の感想やおすすめポイントを自由にお書きください"></textarea>
+            <div id="commentError" class="error-message"></div>
+        </div>
+
+        <!-- 画像アップロードエリア -->
+        <div class="form-group">
+            <label for="imageFile">画像</label>
+            <p th:if="${isEditMode}" class="image-note">新しい画像をアップロードすると、既存の画像は上書きされます。</p>
+            <input type="file" id="imageFile" th:field="*{imageFile}" accept="image/*"/>
+            <img id="imagePreview" src="#" alt="新しい画像のプレビュー" class="image-preview"/>
+        </div>
+
+        <button type="submit" class="submit-btn">投稿する</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 表示されているフォーム（編集用または新規用）を取得 ---
+        const form = document.getElementById('reviewFormEdit') || document.getElementById('reviewFormNew');
+        if (!form) return; // フォームがなければ何もしない
+
+        // --- フォーム内の要素を取得 ---
+        const placeIdInput = form.querySelector('[name="placeId"]');
+        const visitedAtInput = form.querySelector('[id^="visitedAt"]');
+        const commentInput = form.querySelector('[id^="comment"]');
+        const imageFileInput = form.querySelector('[id^="imageFile"]');
+        const imagePreview = form.querySelector('[id^="imagePreview"]');
+        const ratingError = form.querySelector('[id^="ratingError"]');
+        const visitedAtError = form.querySelector('[id^="visitedAtError"]');
+        const commentError = form.querySelector('[id^="commentError"]');
+
+        // --- 新規登録フォーム専用の要素 ---
+        const searchInput = form.querySelector('#placeSearchInput');
+        const resultsContainer = form.querySelector('#searchResults');
+        const placeError = form.querySelector('#placeError');
+
+        // --- 訪問日の未来日選択を不可にする ---
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        if (visitedAtInput) {
+            visitedAtInput.max = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // --- バリデーションロジック ---
+        const validateForm = () => {
+            let formIsValid = true;
+            // エラーメッセージをリセット
+            if (placeError) placeError.textContent = '';
+            if (ratingError) ratingError.textContent = '';
+            if (visitedAtError) visitedAtError.textContent = '';
+            if (commentError) commentError.textContent = '';
+
+            if (searchInput && !placeIdInput.value) {
+                if(placeError) placeError.textContent = '場所を選択してください。';
+                formIsValid = false;
+            }
+            if (!form.querySelector('input[name="rating"]:checked')) {
+                if(ratingError) ratingError.textContent = '評価を選択してください。';
+                formIsValid = false;
+            }
+            if (visitedAtInput && !visitedAtInput.value) {
+                if(visitedAtError) visitedAtError.textContent = '訪問日を入力してください。';
+                formIsValid = false;
+            }
+            if (commentInput && !commentInput.value.trim()) {
+                if(commentError) commentError.textContent = 'コメントを入力してください。';
+                formIsValid = false;
+            }
+            return formIsValid;
+        };
+
+        // --- フォーム送信時の処理 ---
+        form.addEventListener('submit', (event) => {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+
+        // --- 画像プレビューのロジック ---
+        if (imageFileInput) {
+            imageFileInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file && imagePreview) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // ★★★ 修正点: 予測変換のロジックを完全に復元 ★★★
+        if (searchInput) {
+            const debounce = (func, delay) => {
+                let timeout;
+                return (...args) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func(...args), delay);
+                };
+            };
+
+            const displayResults = (places) => {
+                if (!resultsContainer) return;
+                resultsContainer.innerHTML = '';
+                if (places.length === 0) {
+                    resultsContainer.style.display = 'none';
+                    return;
+                }
+                places.forEach(place => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'autocomplete-item';
+                    resultItem.textContent = place.name;
+                    resultItem.addEventListener('click', () => {
+                        searchInput.value = place.name;
+                        placeIdInput.value = place.placeId;
+                        resultsContainer.innerHTML = '';
+                        resultsContainer.style.display = 'none';
+                    });
+                    resultsContainer.appendChild(resultItem);
+                });
+                resultsContainer.style.display = 'block';
+            }
+
+            const debouncedSearch = debounce(async (query) => {
+                if (query.length < 2) {
+                    if(resultsContainer) {
+                        resultsContainer.innerHTML = '';
+                        resultsContainer.style.display = 'none';
+                    }
+                    return;
+                }
+                try {
+                    const response = await fetch(`/api/places/search?query=${encodeURIComponent(query)}`);
+                    const places = await response.json();
+                    displayResults(places);
+                } catch (error) {
+                    console.error('Search API error:', error);
+                }
+            }, 300);
+
+            searchInput.addEventListener('input', () => {
+                debouncedSearch(searchInput.value);
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.autocomplete-container')) {
+                    if(resultsContainer) {
+                        resultsContainer.style.display = 'none';
+                    }
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

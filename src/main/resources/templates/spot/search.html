@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ layout :: head(homeページ, @{/css/spot/search-style.css})}"></head>
+<body>
+<a href="#top" id="backToTop">↑ 上に戻る</a>
+<!-- ハンバーガーボタン -->
+<div class="hamburger" id="hamburgerButton">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <!-- MENU -->
+</div>
+<!-- ハンバーメニュー -->
+<div class="hamburger-menu" id="hamburgerMenu">
+    <ul>
+        <li><a href="">TOP</a></li>
+        <li><a href="">検索ページ</a></li>
+        <li><a th:href="@{/favorites}">お気に入り一覧</a></li>
+        <li><a th:href="@{/reviews/new}">口コミ登録</a></li>
+        <li><a th:href="@{/reviews/my-list}">口コミ一覧</a></li>
+        <li>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">ログアウト</button>
+            </form>
+        </li>
+    </ul>
+</div>
+<div class="blue-gradient"></div>
+
+<!-- 検索バー -->
+<div class="search">
+    <!-- formタグで全体を囲み、送信先と送信方法を指定します -->
+    <form th:action="@{/spots}" method="get">
+        <input type="text" name="query" placeholder="キーワードを入力してください。例 ） 東京　夜　観光など">
+        <!-- 検索ボタンを追加します -->
+    </form>
+</div>
+
+<div class="result">
+    <!-- th:ifとth:unlessを使って、検索時と初期表示時でメッセージを切り替えます -->
+    <p th:if="${searchQuery}" th:text="|${searchQuery}の検索結果|">検索結果</p>
+    <p th:unless="${searchQuery}">おすすめの観光地</p>
+</div>
+
+<a th:href="@{/spots/{id}(id=${spot.placeId})}" class="text-black" th:each="spot : ${spots}">
+    <div class="container">
+        <div class="content">
+            <div>
+                <h2 class="font-18" th:text="${spot.name}">白神山地</h2>
+            </div>
+            <div class="rate font-16 mt-20">
+                <p>google mapでの評価</p>
+                <div class="rating-box" th:style="'--rating: ' + ${spot.rating} + ';'">★★★★★</div>
+            </div>
+            <div class="rate font-16">
+                <p>このアプリでの評価</p>
+                <div class="app-rating-container">
+                    <!-- 口コミが1件以上ある場合 -->
+                    <th:block th:if="${spot.appRatingCount > 0}">
+                        <div class="rating-box" th:style="'--rating: ' + ${spot.appRating} + ';'">★★★★★</div>
+                        <!-- 平均点と件数を表示 -->
+                        <span class="rating-text"
+                              th:text="${#numbers.formatDecimal(spot.appRating, 1, 1)} + ' (' + ${spot.appRatingCount} + '件)'"></span>
+                    </th:block>
+                    <!-- 口コミがまだない場合 -->
+                    <div th:if="${spot.appRatingCount == 0}" class="no-rating">
+                        ☆☆☆☆☆ (評価なし)
+                    </div>
+                </div>
+            </div>
+            <div class="font-16 time mt-20">
+                <h3>営業時間</h3>
+                <div>詳細はタップ</div>
+            </div>
+            <!--            <div class="font-16 time mt-20" th:if="${spot.openingHoursText != '営業時間情報なし'}">-->
+            <!--                <h3>営業時間</h3>-->
+            <!--                <div th:text="${spot.openingHoursText}" style="white-space: pre-wrap;">19:00</div>-->
+            <!--            </div>-->
+            <div class="mt-20">
+                <h3 class="font-16">所在地</h3>
+                <div class="address-content">
+                    <div>
+                        <img th:src="@{/img/map.png}" alt="">
+                    </div>
+                    <a class="font-14" href="#" target="_blank" th:text="${spot.address}">〒036-1424
+                        青森県中津軽郡西目屋村川原平</a>
+                </div>
+            </div>
+        </div>
+        <div class="img-container">
+            <img th:src="${spot.photoUrl}" alt="観光地">
+        </div>
+    </div>
+</a>
+
+<footer>
+    <small>&copy; Oono Akira All rights reserved.</small>
+</footer>
+
+<script>
+    document.getElementById('hamburgerButton').addEventListener('click', function () {
+        this.classList.toggle('active');
+
+        document.getElementById('hamburgerMenu').classList.toggle('active');
+    });
+
+    // スムーズスクロールを有効化
+    document.querySelector('#backToTop').addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+</script>
+</body>
+</html>
